@@ -1,0 +1,100 @@
+{% extends "bootstrap/base.html"  %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}川大教务辅助系统{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">川大教务辅助</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href={{ "/xjInfo/" + user + "/" + pwd }}>学籍信息</a></li>
+                <li><a href={{ "/autoPJ/" + user + "/" + pwd }}>一键评教</a></li>
+                <li><a href={{ "/gradePoint/" + user + "/" + pwd }}>学分绩点</a></li>
+                <li><a href={{ "/xjInfo/" + user + "/" + pwd }}>辅助选课(请期待)</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>一键评教</h1>
+    </div>
+
+    {% if pj_info[1] != [] %}
+    <table class="table">
+        <caption><h3>已评教</h3></caption>
+        <thead>
+            <tr>
+                <th>问卷内容</th>
+                <th>被评人</th>
+                <th>科目</th>
+                <th>评价</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in pj_info[1] %}
+                <tr>
+                    <td>{{ i[3] }}</td>
+                    <td>{{ i[2] }}</td>
+                    <td>{{ i[4] }}</td>
+                    <td> 已评价</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        <br><br><br><br><br>
+    {% endif %}
+
+    {% if pj_info[0] != [] %}
+            <table class="table">
+                <caption><h3>未评教</h3></caption>
+                <thead>
+                <tr>
+                    <th>问卷内容</th>
+                    <th>被评人</th>
+                    <th>科目</th>
+                    <th>评价</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(len) %}
+                        <tr>
+                            <td>{{ pj_info[0][i][3] }}</td>
+                            <td>{{ pj_info[0][i][2] }}</td>
+                            <td>{{ pj_info[0][i][4] }}</td>
+                            <td>
+                                {{ wtf.quick_form(pj_form[i]) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div align="center">
+                    {{ wtf.quick_form(sub) }}
+            </div>
+            <br><br><br><br><br>
+    {% endif %}
+
+    <div class="footer">
+        <div class="navbar navbar-inverse" role="navigation">
+            <h2 align="center" class="text-success"></h2>
+        </div>
+    </div>
+
+
+
+</div>
+{% endblock %}

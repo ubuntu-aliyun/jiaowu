@@ -1,0 +1,52 @@
+{% extends "bootstrap/base.html"  %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}川大教务辅助系统{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">川大教务辅助</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href={{ "/xjInfo/" + user + "/" + pwd }}>学籍信息</a></li>
+                <li><a href={{ "/autoPJ/" + user + "/" + pwd }}>一键评教</a></li>
+                <li><a href={{ "/gradePoint/" + user + "/" + pwd }}>学分绩点</a></li>
+                <li><a href={{ "/xjInfo/" + user + "/" + pwd }}>辅助选课(请期待)</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>学籍信息</h1>
+    </div>
+
+    <table class="table">
+        <caption>基本信息</caption>
+        <tbody>
+            {% for i in range(0, 45, 2) %}
+            <tr>
+                <td>{{ xj_info[i][0] }}    <strong>{{ xj_info[i][1] }}</strong></td>
+                {% if i != 44 %}
+                    <td>{{ xj_info[i + 1][0] }}    <strong>{{ xj_info[i + 1][1] }}</strong></td>
+                {% else %}
+                    <td> </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

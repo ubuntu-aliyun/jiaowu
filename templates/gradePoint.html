@@ -1,0 +1,79 @@
+{% extends "bootstrap/base.html"  %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}川大教务辅助系统{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">川大教务辅助</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href={{ "/xjInfo/" + user + "/" + pwd }}>学籍信息</a></li>
+                <li><a href={{ "/autoPJ/" + user + "/" + pwd }}>一键评教</a></li>
+                <li><a href={{ "/gradePoint/" + user + "/" + pwd }}>学分绩点</a></li>
+                <li><a href={{ "/xjInfo/" + user + "/" + pwd }}>辅助选课(请期待)</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>学分绩点</h1>
+    </div>
+
+    <ul class="list-group">
+        <li class="list-group-item">加权平均分：<strong>{{ cal_grade[0] }}</strong>    加权绩点：<strong>{{ cal_grade[1] }}</strong></li>
+        <li class="list-group-item">必修加权平均分：<strong>{{ cal_grade[2] }}</strong>    必修加权绩点：<strong>{{ cal_grade[3] }}</strong></li>
+        <li class="list-group-item">已修读学分：<strong>{{ credit_count[0] }}</strong>    已过学分：<strong>{{ credit_count[1] }}</strong></li>
+        <li class="list-group-item">必修学分：<strong>{{ credit_count[2] }}</strong>    选修学分：<strong>{{ credit_count[3] }}</strong></li>
+        <div class="text-danger"><li class="list-group-item">挂科数目：{{ credit_count[4] }}</li></div>
+
+    </ul>
+
+    <table class="table">
+        <caption><h2>成绩表</h2></caption>
+        <thead>
+            <tr>
+                <th>课程属性</th>
+                <th>课程号</th>
+                <th>课序号</th>
+                <th>课程名</th>
+                <th>英文课程名</th>
+                <th>学分</th>
+                <th>成绩</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in grade_list %}
+            <tr>
+                <td><strong>{{ i[5] }}</strong></td>
+                <td>{{ i[0] }}</td>
+                <td>{{ i[1] }}</td>
+                <td>{{ i[2] }}</td>
+                <td>{{ i[3] }}</td>
+                <td><div class="text-info">{{ i[4] }}</div> </td>
+                <td>
+                    {% if i[6] >= 60 %}
+                        <div class="text-success">{{ i[6] }}</div>
+                    {% else %}
+                        <div class="text-danger">{{ i[6] }}</div>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
